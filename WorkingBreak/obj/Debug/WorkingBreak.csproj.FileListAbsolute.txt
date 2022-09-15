@@ -1,0 +1,10 @@
+E:\GIT_Project\WorkingBreak\WorkingBreak\bin\Debug\WorkingBreak.exe.config
+E:\GIT_Project\WorkingBreak\WorkingBreak\bin\Debug\WorkingBreak.exe
+E:\GIT_Project\WorkingBreak\WorkingBreak\bin\Debug\WorkingBreak.pdb
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csprojAssemblyReference.cache
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.Form1.resources
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.Properties.Resources.resources
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.GenerateResource.cache
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.CoreCompileInputs.cache
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.exe
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.pdb
