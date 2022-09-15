@@ -8,13 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
+using System.Configuration;
+using System.IO;
+
 
 namespace WorkingBreak
 {
     public partial class Form1 : Form
     {  // инициализируем начальную точку активности курсора.
-        Point point = new Point(MousePosition.X,MousePosition.Y);
-
+        Point point = new Point(MousePosition.X, MousePosition.Y);
         public Form1()
         {
             InitializeComponent();
@@ -25,9 +27,10 @@ namespace WorkingBreak
             //скрыть с панели задач:
             this.ShowInTaskbar = false;
             //делаем окно прозрачным
-            this.Opacity = 0;
+            this.Opacity = 0;            
             getTimer();
             Application.Exit();
+
         }
 
         #region переменные для рабты с таймером.
@@ -36,6 +39,7 @@ namespace WorkingBreak
         int timeDonWork = 0;
         int X = 0;
         int Y = 0;
+        int RequiredWorkingTime = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWork").First()); /// Значение задержки берем из файла конфигурации
         #endregion
 
         #region Таймер.
@@ -54,7 +58,7 @@ namespace WorkingBreak
         }
         #endregion
 
-        #region Событие таймера.
+        #region Событие таймера.        
         /// <summary>
         /// Событие таймера.
         /// </summary>
@@ -64,28 +68,28 @@ namespace WorkingBreak
         {
             timer.Stop();
             point = new Point(MousePosition.X, MousePosition.Y);
-            if (X!=point.X && Y!=point.Y)
+            if (X != point.X && Y != point.Y)
             {
                 timeWork += timer.Interval;
                 timeDonWork = 0;
-                if (timeWork > 60000)
+                if (timeWork > RequiredWorkingTime)
                 {
-                    if (MessageBox.Show("Мы заботимся о вашем здоровье и предлогаем отдохнуть", "Внимание",  MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) == DialogResult.OK)
+                    if (MessageBox.Show("Мы заботимся о вашем здоровье и предлогаем отдохнуть", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) == DialogResult.OK)
                     {
                         // Молодец ты заслужил отдых
                     }
                 }
                 X = point.X; Y = point.Y;
-                timer.Enabled = true;               
+                timer.Enabled = true;
             }
             else
             {
                 timeDonWork += timer.Interval;
-                if (timeDonWork > 180000)///если не длвигал мышкой больше 3 минут то время до следующего отдых сбрасывается.
+                if (timeDonWork > 180000)///если не двигал мышкой больше 3 минут то время до следующего отдых сбрасывается.
                 { timeWork = 0; } //если долго отдыхать то можно и потерять рабочее время.
                 timer.Enabled = true;
-            }            
+            }
         }
-        #endregion
+        #endregion      
     }
 }
