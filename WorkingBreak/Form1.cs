@@ -74,10 +74,8 @@ namespace WorkingBreak
                 timeDonWork = 0;
                 if (timeWork > RequiredWorkingTime)
                 {
-                    if (MessageBox.Show("Мы заботимся о вашем здоровье и предлогаем отдохнуть", "Внимание", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) == DialogResult.OK)
-                    {
-                        // Молодец ты заслужил отдых
-                    }
+                    MessageWindow mesageWindow = new MessageWindow();
+                    mesageWindow.Show();
                 }
                 X = point.X; Y = point.Y;
                 timer.Enabled = true;

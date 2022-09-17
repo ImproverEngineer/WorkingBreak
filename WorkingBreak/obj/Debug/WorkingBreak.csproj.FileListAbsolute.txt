@@ -8,3 +8,4 @@ E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.CoreCompi
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.exe
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.pdb
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.AssemblyReference.cache
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.MessageWindow.resources
