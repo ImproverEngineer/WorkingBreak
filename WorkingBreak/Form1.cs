@@ -20,6 +20,29 @@ namespace WorkingBreak
         public Form1()
         {
             InitializeComponent();
+
+            //если config директории не существует то завершаем работу
+            if (!File.Exists(Directory.GetCurrentDirectory() + @"\WorkingBreak.exe.config"))
+            {
+                Application.Exit();
+            }
+            else 
+            {                
+                try
+                {
+                    // заполняем данными из конфигурации
+                    this.RequiredWorkingTime = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWork").First()); /// Значение задержки берем из файла конфигурации
+                    this.TimeWithoutWork = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWithoutWork").First()); ///Время без работы 
+                    this.DecayInterval = int.Parse(ConfigurationSettings.AppSettings.GetValues("DecayInterval").First()); /// Задержка окна оповещения
+                    this.widtWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("widtWindowDeflection").First()); /// Нормали от нижнего правого края по горизонтали
+                    this.heightWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("heightWindowDeflection").First()); /// Нормали от нижнего правого края по вертикали 
+                }
+                catch (ConfigurationException ex) 
+                {
+                    MessageBox.Show("Внимание в файле конфигурации присутствует ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    this.Close();
+                }
+            }
             // Убираем кнопки свернуть, развернуть, закрыть.
             this.ControlBox = false;
             // Убираем заголовок.
@@ -36,10 +59,14 @@ namespace WorkingBreak
         #region переменные для рабты с таймером.
         Timer timer = new Timer();
         int timeWork = 0;
-        int timeDonWork = 0;
+        int timeDonWork = 0;        
         int X = 0;
         int Y = 0;
-        int RequiredWorkingTime = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWork").First()); /// Значение задержки берем из файла конфигурации
+        int RequiredWorkingTime = 0; /// Значение задержки берем из файла конфигурации
+        int TimeWithoutWork = 0; ///Время без работы 
+        int DecayInterval = 0; /// время затухания окна
+        int widtWindowDeflection = 0; /// отклонение от правого нижнего края по горизонтали  
+        int heightWindowDeflection = 0; /// отклонение от правого нижнего края по вертикали 
         #endregion
 
         #region Таймер.
@@ -74,7 +101,7 @@ namespace WorkingBreak
                 timeDonWork = 0;
                 if (timeWork > RequiredWorkingTime)
                 {
-                    MessageWindow mesageWindow = new MessageWindow();
+                    MessageWindow mesageWindow = new MessageWindow(DecayInterval,widtWindowDeflection,heightWindowDeflection);
                     mesageWindow.Show();
                 }
                 X = point.X; Y = point.Y;
@@ -83,7 +110,7 @@ namespace WorkingBreak
             else
             {
                 timeDonWork += timer.Interval;
-                if (timeDonWork > 180000)///если не двигал мышкой больше 3 минут то время до следующего отдых сбрасывается.
+                if (timeDonWork > TimeWithoutWork)///если не двигал мышкой больше TimeWithoutWork милесекунд то время до следующего отдых сбрасывается.
                 { timeWork = 0; } //если долго отдыхать то можно и потерять рабочее время.
                 timer.Enabled = true;
             }

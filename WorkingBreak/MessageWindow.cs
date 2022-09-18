@@ -12,11 +12,16 @@ namespace WorkingBreak
 {
     public partial class MessageWindow : Form
     {
-        public MessageWindow()
+        int DecayInterval = 0;
+        int widthWindowDeflection = 0;
+        int heightWindowDeflection = 0;
+        public MessageWindow(int DecayInterval, int widtWindowDeflection, int heightWindowDeflection)
         {
             InitializeComponent();
-        }
-
+            this.DecayInterval = DecayInterval;
+            this.widthWindowDeflection = widtWindowDeflection;
+            this.heightWindowDeflection = heightWindowDeflection;
+        }        
         private void MessageWindow_Load(object sender, EventArgs e)
         {
             this.Size = new Size(160,240);//Размер окна возможно нужно регулировать?
@@ -27,7 +32,7 @@ namespace WorkingBreak
             int new_higth = height - this.Size.Height-50 ; //Размер Height возможно нужно регулировать?
             this.Location = new System.Drawing.Point(new_width,new_higth);
             Timer timer = new Timer(); //Cоздать таймер чтобы окно само закрывалось через заданное количество времени
-            timer.Interval = 3000;
+            timer.Interval = this.DecayInterval;
             timer.Tick += timer_tick;
             timer.Enabled = true; 
             
