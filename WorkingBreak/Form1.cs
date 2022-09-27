@@ -103,9 +103,11 @@ namespace WorkingBreak
                 {
                     MessageWindow mesageWindow = new MessageWindow(DecayInterval,widtWindowDeflection,heightWindowDeflection);
                     mesageWindow.Show();
+                    timeWork = 0;
                 }
                 X = point.X; Y = point.Y;
                 timer.Enabled = true;
+               
             }
             else
             {
