@@ -7,5 +7,15 @@ E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.GenerateR
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.CoreCompileInputs.cache
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.exe
 E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.pdb
-E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.csproj.AssemblyReference.cache
-E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.MessageWindow.resources
+C:\Testy\WorkingBreak-main\WorkingBreak\bin\Debug\WorkingBreak.exe.config
+C:\Testy\WorkingBreak-main\WorkingBreak\bin\Debug\WorkingBreak.exe
+C:\Testy\WorkingBreak-main\WorkingBreak\bin\Debug\WorkingBreak.pdb
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.csprojAssemblyReference.cache
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.Form1.resources
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.Properties.Resources.resources
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.csproj.GenerateResource.cache
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.csproj.CoreCompileInputs.cache
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.exe
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.pdb
+C:\Testy\WorkingBreak-main\WorkingBreak\obj\Debug\WorkingBreak.Settings.resources
+E:\GIT_Project\WorkingBreak\WorkingBreak\obj\Debug\WorkingBreak.Settings.resources

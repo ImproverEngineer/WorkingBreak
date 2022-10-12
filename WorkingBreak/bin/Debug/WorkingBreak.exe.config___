@@ -15,14 +15,14 @@
 <configuration>
 		<appSettings>		
 			<add key="TimeWork" value="10000"/>		
-			<add key="TimeWithoutWork" value="10000"/>	
-			<add key="DecayInterval" value="1000"/>		
+			<add key="TimeWithoutWork" value="180000"/>	
+			<add key="DecayInterval" value="3000"/>		
 			<add key="widtWindowDeflection" value="5"/>	
 			<add key="heightWindowDeflection" value="50"/>
-			<add key="Opacity" value ="60"/>
-			<add key="textHeder" value="Отдохни, если устал."/>
-			<add key="textBodyFirs" value="Сделай зарядку."/>
-			<add key="textBodySec" value="Подумай о море."/>
-			<add key="textFooter" value ="Выпей кофе"/>			
+			<add key="Opacity" value ="50"/>
+			<add key="textHeder" value="Отдохни если устал.🍿"/>
+			<add key="textBodyFirs" value="Сделай зарядку.💪"/>
+			<add key="textBodySec" value="Подумай о море.🌞"/>
+			<add key="textFooter" value ="Выпей кофе☕"/>			
 		</appSettings>   
 </configuration>

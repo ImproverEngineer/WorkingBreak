@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows;
 using System.Configuration;
 using System.IO;
 
@@ -24,7 +18,8 @@ namespace WorkingBreak
             //если config директории не существует то завершаем работу
             if (!File.Exists(Directory.GetCurrentDirectory() + @"\WorkingBreak.exe.config"))
             {
-                Application.Exit();
+                /*Выставляю настройки по умолчанию*/
+                pastSettings();
             }
             else 
             {                
@@ -36,13 +31,18 @@ namespace WorkingBreak
                     this.DecayInterval = int.Parse(ConfigurationSettings.AppSettings.GetValues("DecayInterval").First()); /// Задержка окна оповещения
                     this.widtWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("widtWindowDeflection").First()); /// Нормали от нижнего правого края по горизонтали
                     this.heightWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("heightWindowDeflection").First()); /// Нормали от нижнего правого края по вертикали 
+                    Settings.Opacity = double.Parse(ConfigurationSettings.AppSettings.GetValues("Opacity").First().ToString()) / 100;
+                    Settings.textHeader = ConfigurationSettings.AppSettings.GetValues("textHeder").First().ToString();
+                    Settings.textBodyFirs = ConfigurationSettings.AppSettings.GetValues("textBodyFirs").First().ToString();
+                    Settings.textBodySec = ConfigurationSettings.AppSettings.GetValues("textBodySec").First().ToString();
+                    Settings.textFooter = ConfigurationSettings.AppSettings.GetValues("textFooter").First().ToString();
                 }
                 catch (ConfigurationException ex) 
                 {
-                    MessageBox.Show("Внимание в файле конфигурации присутствует ошибка", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    this.Close();
+                    Logger.WriteLine("Ошибка чтения конфигурации (" + ex.Message+")");
+                    pastSettings();
                 }
-            }
+           
             // Убираем кнопки свернуть, развернуть, закрыть.
             this.ControlBox = false;
             // Убираем заголовок.
@@ -52,8 +52,9 @@ namespace WorkingBreak
             //делаем окно прозрачным
             this.Opacity = 0;            
             getTimer();
+            }
+            //выход в любом случаее 
             Application.Exit();
-
         }
 
         #region переменные для рабты с таймером.
@@ -75,13 +76,21 @@ namespace WorkingBreak
         /// </summary>
         private void getTimer()
         {
-            timer.Interval = 5000;
-            timer.Tick += new System.EventHandler(TimerTick);
-            timer.Start();
-            while (true)
+            try
             {
-                Application.DoEvents();
+                timer.Interval = 5000;
+                timer.Tick += new System.EventHandler(TimerTick);
+                timer.Start();
+                while (true)
+                {
+                    Application.DoEvents();
+                }
             }
+            catch
+            {
+                Logger.WriteLine("Ошибка запуска конфигурации");
+            }
+
         }
         #endregion
 
@@ -101,9 +110,16 @@ namespace WorkingBreak
                 timeDonWork = 0;
                 if (timeWork > RequiredWorkingTime)
                 {
-                    MessageWindow mesageWindow = new MessageWindow(DecayInterval,widtWindowDeflection,heightWindowDeflection);
-                    mesageWindow.Show();
-                    timeWork = 0;
+                    try
+                    {
+                        MessageWindow mesageWindow = new MessageWindow(DecayInterval, widtWindowDeflection, heightWindowDeflection);
+                        mesageWindow.Show();
+                        timeWork = 0;
+                    }
+                    catch
+                    {
+                        Logger.WriteLine("Ошибка формирования окна.");
+                    }
                 }
                 X = point.X; Y = point.Y;
                 timer.Enabled = true;
@@ -117,6 +133,48 @@ namespace WorkingBreak
                 timer.Enabled = true;
             }
         }
-        #endregion      
+        #endregion
+
+        #region вставить настройки
+        private void pastSettings() 
+        {
+            this.RequiredWorkingTime = 7200000;
+            this.TimeWithoutWork = 180000;
+            this.DecayInterval = 10000;
+            this.widtWindowDeflection = 5;
+            this.heightWindowDeflection = 50;
+            Settings.Opacity = 60;
+            Settings.textHeader = "Отдохни, если устал.";
+            Settings.textBodyFirs = "Сделай зарядку.";
+            Settings.textBodySec = "Подумай о море.";
+            Settings.textFooter = "Выпей кофе";
+        }
+        #endregion
+
     }
+
+
+    #region Просто пишем логи в папку Temp. C:\Users\Rinat\AppData\Local\Temp
+
+    public static class Logger    {
+
+        /*Логи в строчку*/
+        public static void Write(string text)
+        {
+            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(Path.GetTempPath()) + @"\WorkingBreakloglog.txt", true))
+            {
+                sw.Write(DateTime.Now.ToString() + " " + text);
+            }
+        }
+
+        /*Логи с возвратом коретки*/
+        public static void WriteLine(string text)
+        {          
+            using (StreamWriter sw = new StreamWriter(Path.GetDirectoryName(Path.GetTempPath()) + @"\WorkingBreaklog.txt", true))
+            {
+                sw.WriteLine(DateTime.Now.ToString() + ": " + text);
+            }
+        }
+    }
+    #endregion
 }
