@@ -14,35 +14,30 @@ namespace WorkingBreak
         public Form1()
         {
             InitializeComponent();
-
-            //если config директории не существует то завершаем работу
-            if (!File.Exists(Directory.GetCurrentDirectory() + @"\WorkingBreak.exe.config"))
+            try
             {
-                /*Выставляю настройки по умолчанию*/
+                // заполняем данными из конфигурации
+                this.RequiredWorkingTime = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWork").First()); /// Значение задержки берем из файла конфигурации
+                this.TimeWithoutWork = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWithoutWork").First()); ///Время без работы 
+                this.DecayInterval = int.Parse(ConfigurationSettings.AppSettings.GetValues("DecayInterval").First()); /// Задержка окна оповещения
+                this.widtWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("widtWindowDeflection").First()); /// Нормали от нижнего правого края по горизонтали
+                this.heightWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("heightWindowDeflection").First()); /// Нормали от нижнего правого края по вертикали 
+                Settings.Opacity = double.Parse(ConfigurationSettings.AppSettings.GetValues("Opacity").First().ToString()) / 100;
+                Settings.textHeader = ConfigurationSettings.AppSettings.GetValues("textHeder").First().ToString();
+                Settings.textBodyFirs = ConfigurationSettings.AppSettings.GetValues("textBodyFirs").First().ToString();
+                Settings.textBodySec = ConfigurationSettings.AppSettings.GetValues("textBodySec").First().ToString();
+                Settings.textFooter = ConfigurationSettings.AppSettings.GetValues("textFooter").First().ToString();
+            }
+            catch (ConfigurationException ex)
+            {
+                Logger.WriteLine("Ошибка чтения конфигурации (" + ex.Message + ")");
                 pastSettings();
             }
-            else 
-            {                
-                try
-                {
-                    // заполняем данными из конфигурации
-                    this.RequiredWorkingTime = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWork").First()); /// Значение задержки берем из файла конфигурации
-                    this.TimeWithoutWork = int.Parse(ConfigurationSettings.AppSettings.GetValues("TimeWithoutWork").First()); ///Время без работы 
-                    this.DecayInterval = int.Parse(ConfigurationSettings.AppSettings.GetValues("DecayInterval").First()); /// Задержка окна оповещения
-                    this.widtWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("widtWindowDeflection").First()); /// Нормали от нижнего правого края по горизонтали
-                    this.heightWindowDeflection = int.Parse(ConfigurationSettings.AppSettings.GetValues("heightWindowDeflection").First()); /// Нормали от нижнего правого края по вертикали 
-                    Settings.Opacity = double.Parse(ConfigurationSettings.AppSettings.GetValues("Opacity").First().ToString()) / 100;
-                    Settings.textHeader = ConfigurationSettings.AppSettings.GetValues("textHeder").First().ToString();
-                    Settings.textBodyFirs = ConfigurationSettings.AppSettings.GetValues("textBodyFirs").First().ToString();
-                    Settings.textBodySec = ConfigurationSettings.AppSettings.GetValues("textBodySec").First().ToString();
-                    Settings.textFooter = ConfigurationSettings.AppSettings.GetValues("textFooter").First().ToString();
-                }
-                catch (ConfigurationException ex) 
-                {
-                    Logger.WriteLine("Ошибка чтения конфигурации (" + ex.Message+")");
-                    pastSettings();
-                }
-           
+            catch (Exception ex) 
+            {
+                Logger.WriteLine("Ошибка чтения конфигурации (" + ex.Message + ")");
+                pastSettings();
+            }
             // Убираем кнопки свернуть, развернуть, закрыть.
             this.ControlBox = false;
             // Убираем заголовок.
@@ -52,7 +47,7 @@ namespace WorkingBreak
             //делаем окно прозрачным
             this.Opacity = 0;            
             getTimer();
-            }
+          
             //выход в любом случаее 
             Application.Exit();
         }
@@ -71,8 +66,7 @@ namespace WorkingBreak
         #endregion
 
         #region Таймер.
-        /// <summary>
-        /// Таймер.
+        /// <summary>/// Таймер.
         /// </summary>
         private void getTimer()
         {
@@ -84,6 +78,7 @@ namespace WorkingBreak
                 while (true)
                 {
                     Application.DoEvents();
+                    System.Threading.Thread.Sleep(1000);
                 }
             }
             catch
